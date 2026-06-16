@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "spelunk"
+version = "0.1.0"
+description = "Static analysis CLI and library for local code repositories"
+requires-python = ">=3.10"
+dependencies = [
+    "click>=8.0",
+    "pathspec>=0.12",
+    "gitpython>=3.1",
+    "tomli>=2.0; python_version < '3.11'",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "mypy",
+    "ruff",
+]
+
+[project.scripts]
+spelunk = "spelunk.__main__:main"
+
+[tool.mypy]
+strict = true
+exclude = ["tests/"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+]

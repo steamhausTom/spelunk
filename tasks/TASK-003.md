@@ -1,6 +1,6 @@
 # TASK-003: Implement schema.py with SCHEMA_VERSION and JSON Schema dict
 
-**Status**: Pending
+**Status**: In Review
 **Wave**: 1
 **Assignee**: tc-backend-engineer
 **Effort**: S — constant definition and JSON Schema transcription; no runtime logic
@@ -37,10 +37,10 @@ Add a comment block above `SCHEMA_VERSION` documenting the versioning rule:
 
 ## Acceptance Criteria
 
-- [ ] [eng] Given `schema.py` is imported · When `SCHEMA_VERSION` is accessed · Then its value is the string `"1.0.0"`
-- [ ] [eng] Given `OUTPUT_SCHEMA` · When inspected · Then it is a `dict` containing `"required"` with all ten top-level output keys listed
-- [ ] [eng] Given `schema.py` · When imported · Then it imports nothing from `spelunk` (zero intra-package imports)
-- [ ] [eng] Given `mypy --strict` runs against `schema.py` · When it completes · Then zero type errors are reported
+- [x] [eng] Given `schema.py` is imported · When `SCHEMA_VERSION` is accessed · Then its value is the string `"1.0.0"`
+- [x] [eng] Given `OUTPUT_SCHEMA` · When inspected · Then it is a `dict` containing `"required"` with all ten top-level output keys listed
+- [x] [eng] Given `schema.py` · When imported · Then it imports nothing from `spelunk` (zero intra-package imports)
+- [x] [eng] Given `mypy --strict` runs against `schema.py` · When it completes · Then zero type errors are reported
 
 ## Notes / Risks
 

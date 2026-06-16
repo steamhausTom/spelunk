@@ -29,11 +29,11 @@
 
 | ID | Title | Assignee | Status | Effort | Depends On | Task File |
 |----|-------|----------|--------|--------|------------|-----------|
-| TASK-001 | Scaffold pyproject.toml and project packaging | tc-backend-engineer | Pending | S | None | [tasks/TASK-001.md](tasks/TASK-001.md) |
-| TASK-002 | Implement models.py data layer | tc-backend-engineer | Pending | S | None | [tasks/TASK-002.md](tasks/TASK-002.md) |
-| TASK-003 | Implement schema.py with SCHEMA_VERSION and JSON Schema dict | tc-backend-engineer | Pending | S | None | [tasks/TASK-003.md](tasks/TASK-003.md) |
-| TASK-004 | Implement interfaces.py Analyser Protocol | tc-backend-engineer | Pending | S | None | [tasks/TASK-004.md](tasks/TASK-004.md) |
-| TASK-005 | Implement utils.py: directory walk, .gitignore filtering, symlink containment | tc-backend-engineer | Pending | M | None | [tasks/TASK-005.md](tasks/TASK-005.md) |
+| TASK-001 | Scaffold pyproject.toml and project packaging | tc-backend-engineer | In Review | S | None | [tasks/TASK-001.md](tasks/TASK-001.md) |
+| TASK-002 | Implement models.py data layer | tc-backend-engineer | In Review | S | None | [tasks/TASK-002.md](tasks/TASK-002.md) |
+| TASK-003 | Implement schema.py with SCHEMA_VERSION and JSON Schema dict | tc-backend-engineer | In Review | S | None | [tasks/TASK-003.md](tasks/TASK-003.md) |
+| TASK-004 | Implement interfaces.py Analyser Protocol | tc-backend-engineer | In Review | S | None | [tasks/TASK-004.md](tasks/TASK-004.md) |
+| TASK-005 | Implement utils.py: directory walk, .gitignore filtering, symlink containment | tc-backend-engineer | In Review | M | None | [tasks/TASK-005.md](tasks/TASK-005.md) |
 
 ### Wave 2 — Core pipeline: first end-to-end slice + test infrastructure
 
