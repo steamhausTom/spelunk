@@ -1,0 +1,2 @@
+- [repo-scanner initial build](tc-product-owner/project_repo_scanner_init.md) — BRIEF-001 written; 2 open architectural questions (analyser interface shape, framework detection matrix) block implementation
+- [repo-scanner project facts](tc-project-planner/project_repo_scanner.md) — greenfield Python CLI/library, stack decisions, architect constraints (F1–F10), TASK-001–016 wave structure
