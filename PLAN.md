@@ -21,6 +21,18 @@
 - [x] Analyser interface shape — resolved by architect: `typing.Protocol` in `interfaces.py` (F1).
 - [x] Framework detection matrix — resolved by architect: bounded in-source rule table of 14 frameworks (F3).
 
+## Inline Fixes Applied (feature/wave-1-foundation — post-review remediation, 2026-06-16)
+
+The following XS findings were resolved directly on the `feature/wave-1-foundation` branch without new task files:
+
+| Finding | Severity | File | Change |
+|---------|----------|------|--------|
+| SEC-F2 | High | `pyproject.toml:13` | Raised `gitpython` minimum from `>=3.1` to `>=3.1.41` (excludes CVE-2022-24439, CVE-2023-40267) |
+| STR-F2 | High | `spelunk/utils.py:114-121` | Added `dname == ".git"` guard to exclude `.git/` from walk |
+| STR-F6 | Low | `spelunk/utils.py:177-180,185` | Distinguished `PermissionError` from `OSError`; non-permission errors now emit `"OS error: {path}: {exc}"` instead of `"Permission denied"` |
+| QA-F1 / STR-F8 / SEC-F4(1) | Low / Informational | `spelunk/models.py:13-14` | Removed unused `import json`; changed all `to_dict() -> dict` to `to_dict() -> dict[str, Any]`, eliminating 14 `# type: ignore[type-arg]` suppressions |
+| SEC-F3 | Medium | `spelunk/interfaces.py:31` | Corrected `ScanInputs.file_paths` docstring to state binary and large files ARE included; callers must guard with `is_binary()` and size check |
+
 ---
 
 ## Task Index
@@ -34,6 +46,20 @@
 | TASK-003 | Implement schema.py with SCHEMA_VERSION and JSON Schema dict | tc-backend-engineer | In Review | S | None | [tasks/TASK-003.md](tasks/TASK-003.md) |
 | TASK-004 | Implement interfaces.py Analyser Protocol | tc-backend-engineer | In Review | S | None | [tasks/TASK-004.md](tasks/TASK-004.md) |
 | TASK-005 | Implement utils.py: directory walk, .gitignore filtering, symlink containment | tc-backend-engineer | In Review | M | None | [tasks/TASK-005.md](tasks/TASK-005.md) |
+
+### Wave 1 Remediation — Post-review bug fixes on feature/wave-1-foundation
+
+These tasks resolve findings from the Wave 1 review pass. All are on `feature/wave-1-foundation`. TASK-017 and TASK-021 are **blocking** — the Wave 1 PR must not be raised until both are complete.
+
+| ID | Title | Assignee | Status | Effort | Depends On | Task File |
+|----|-------|----------|--------|--------|------------|-----------|
+| TASK-017 | Fix root vs resolved_root mismatch that silently disables .gitignore filtering | tc-backend-engineer | Pending | S | TASK-005 | [tasks/TASK-017.md](tasks/TASK-017.md) |
+| TASK-018 | Apply nested .gitignore rules relative to their own directory only | tc-backend-engineer | Pending | M | TASK-017 | [tasks/TASK-018.md](tasks/TASK-018.md) |
+| TASK-019 | Fix in-scope symlink double-counting in walk_repo | tc-backend-engineer | Pending | S | TASK-017 | [tasks/TASK-019.md](tasks/TASK-019.md) |
+| TASK-020 | Add coverage tests for STR-F1 through STR-F4 utils scenarios | tc-qa-test-engineer | Pending | S | TASK-017, TASK-018, TASK-019 | [tasks/TASK-020.md](tasks/TASK-020.md) |
+| TASK-021 | Add size cap to .gitignore reads to prevent memory exhaustion | tc-backend-engineer | Pending | S | TASK-005 | [tasks/TASK-021.md](tasks/TASK-021.md) |
+| TASK-022 | Optimise walk_repo hot path — gate _can_open probe on mode bits | tc-backend-engineer | Pending | S | TASK-005 | [tasks/TASK-022.md](tasks/TASK-022.md) |
+| TASK-023 | Normalise error paths to relative and add dependency lock file | tc-backend-engineer | Pending | S | TASK-005 | [tasks/TASK-023.md](tasks/TASK-023.md) |
 
 ### Wave 2 — Core pipeline: first end-to-end slice + test infrastructure
 
@@ -88,3 +114,5 @@
 | `mypy --strict` breaks on `dataclasses.asdict()` with nested generics | Low | Medium | Test `to_dict()` + `json.dumps` round-trip in TASK-002 before other tasks depend on it |
 | 50k-file walk exceeds CI memory/time limits | Low | High | Mark test `@pytest.mark.slow`; gate it on CI environment variable; set an explicit wall-clock timeout assertion |
 | `.gitignore` pathspec edge cases (negation, double-star) causing over/under exclusion | Medium | Medium | Use `pathspec` library (not hand-rolled); include fixture repos with non-trivial gitignore patterns in TASK-009 |
+| Nested `.gitignore` refactor (TASK-018) breaks existing gitignore tests | Medium | Medium | Write characterisation tests before refactoring; TASK-020 pins all four scenarios before TASK-018 touches the call path |
+| `collect_gitignore_spec` signature change (TASK-021) breaks upstream callers | Low | Medium | `walk_repo` is the only caller; update it atomically in the same commit; update any direct test callers in the same PR |

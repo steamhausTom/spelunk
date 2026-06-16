@@ -111,10 +111,15 @@ def walk_repo(root: Path) -> tuple[list[Path], list[str], list[str]]:
         dirpath = Path(dirpath_str)
 
         # Build the pruned list of child directories to descend into.
-        # For each child dir, apply: gitignore filter, scope escape check,
+        # For each child dir, apply: .git exclusion, gitignore filter, scope escape check,
         # and cycle detection (inode dedup).
         valid_dirs: list[str] = []
         for dname in dirnames:
+            # Always skip the .git directory — git never lists it in .gitignore
+            # and its internals (loose objects, pack files, refs) pollute stats.
+            if dname == ".git":
+                continue
+
             child_dir = dirpath / dname
 
             # Gitignore check on the directory
@@ -171,13 +176,13 @@ def walk_repo(root: Path) -> tuple[list[Path], list[str], list[str]]:
             except PermissionError:
                 errors.append(f"Permission denied: {path}")
                 continue
-            except OSError:
-                errors.append(f"Permission denied: {path}")
+            except OSError as exc:
+                errors.append(f"OS error: {path}: {exc}")
                 continue
 
             # Check open permission explicitly (stat may succeed on owned mode-0 files)
             if not _can_open(path):
-                errors.append(f"Permission denied: {path}")
+                errors.append(f"Cannot open for reading: {path}")
                 continue
 
             # Large file check

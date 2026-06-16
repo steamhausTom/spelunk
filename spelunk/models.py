@@ -11,7 +11,7 @@ without a custom encoder.
 from __future__ import annotations
 
 import dataclasses
-import json
+from typing import Any
 
 
 @dataclasses.dataclass
@@ -21,7 +21,7 @@ class ScanError:
     source: str  # e.g. "analysers.git_meta"
     message: str
 
-    def to_dict(self) -> dict:  # type: ignore[type-arg]
+    def to_dict(self) -> dict[str, Any]:
         return dataclasses.asdict(self)
 
 
@@ -33,7 +33,7 @@ class ScanMeta:
     errors: list[ScanError] = dataclasses.field(default_factory=list)
     warnings: list[str] = dataclasses.field(default_factory=list)
 
-    def to_dict(self) -> dict:  # type: ignore[type-arg]
+    def to_dict(self) -> dict[str, Any]:
         return dataclasses.asdict(self)
 
 
@@ -47,7 +47,7 @@ class RepoInfo:
     license: str | None
     root_path: str  # stored as str, not Path
 
-    def to_dict(self) -> dict:  # type: ignore[type-arg]
+    def to_dict(self) -> dict[str, Any]:
         return dataclasses.asdict(self)
 
 
@@ -62,7 +62,7 @@ class GitInfo:
     contributor_count: int | None
     tags: list[str] = dataclasses.field(default_factory=list)
 
-    def to_dict(self) -> dict:  # type: ignore[type-arg]
+    def to_dict(self) -> dict[str, Any]:
         return dataclasses.asdict(self)
 
 
@@ -74,7 +74,7 @@ class LanguageStats:
     file_count: int
     byte_total: int
 
-    def to_dict(self) -> dict:  # type: ignore[type-arg]
+    def to_dict(self) -> dict[str, Any]:
         return dataclasses.asdict(self)
 
 
@@ -85,7 +85,7 @@ class LanguageInfo:
     primary: str | None
     languages: list[LanguageStats] = dataclasses.field(default_factory=list)
 
-    def to_dict(self) -> dict:  # type: ignore[type-arg]
+    def to_dict(self) -> dict[str, Any]:
         return dataclasses.asdict(self)
 
 
@@ -97,7 +97,7 @@ class ExtensionStats:
     file_count: int
     byte_total: int
 
-    def to_dict(self) -> dict:  # type: ignore[type-arg]
+    def to_dict(self) -> dict[str, Any]:
         return dataclasses.asdict(self)
 
 
@@ -111,7 +111,7 @@ class NotableFiles:
     docker: list[str] = dataclasses.field(default_factory=list)
     iac: list[str] = dataclasses.field(default_factory=list)
 
-    def to_dict(self) -> dict:  # type: ignore[type-arg]
+    def to_dict(self) -> dict[str, Any]:
         return dataclasses.asdict(self)
 
 
@@ -125,7 +125,7 @@ class FileTreeInfo:
     extensions: list[ExtensionStats] = dataclasses.field(default_factory=list)
     notable_files: NotableFiles = dataclasses.field(default_factory=NotableFiles)
 
-    def to_dict(self) -> dict:  # type: ignore[type-arg]
+    def to_dict(self) -> dict[str, Any]:
         return dataclasses.asdict(self)
 
 
@@ -138,7 +138,7 @@ class Dependency:
     ecosystem: str
     dev: bool
 
-    def to_dict(self) -> dict:  # type: ignore[type-arg]
+    def to_dict(self) -> dict[str, Any]:
         return dataclasses.asdict(self)
 
 
@@ -149,7 +149,7 @@ class ManifestInfo:
     path: str
     ecosystem: str
 
-    def to_dict(self) -> dict:  # type: ignore[type-arg]
+    def to_dict(self) -> dict[str, Any]:
         return dataclasses.asdict(self)
 
 
@@ -161,7 +161,7 @@ class DependenciesInfo:
     runtime: list[Dependency] = dataclasses.field(default_factory=list)
     dev: list[Dependency] = dataclasses.field(default_factory=list)
 
-    def to_dict(self) -> dict:  # type: ignore[type-arg]
+    def to_dict(self) -> dict[str, Any]:
         return dataclasses.asdict(self)
 
 
@@ -173,7 +173,7 @@ class TestingInfo:
     test_directories: list[str] = dataclasses.field(default_factory=list)
     test_file_count: int = 0
 
-    def to_dict(self) -> dict:  # type: ignore[type-arg]
+    def to_dict(self) -> dict[str, Any]:
         return dataclasses.asdict(self)
 
 
@@ -192,5 +192,5 @@ class RepoScanResult:
     testing: TestingInfo
     meta: ScanMeta
 
-    def to_dict(self) -> dict:  # type: ignore[type-arg]
+    def to_dict(self) -> dict[str, Any]:
         return dataclasses.asdict(self)

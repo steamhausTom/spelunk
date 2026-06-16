@@ -28,7 +28,12 @@ class ScanInputs:
     """
 
     root: Path  # resolved absolute path to the repo root
-    file_paths: list[Path]  # pre-walked, non-ignored, non-binary-skipped paths
+    file_paths: list[Path]  # pre-walked, non-gitignored paths.
+    # IMPORTANT: binary files and large files (>10 MB) ARE included so that
+    # file_tree.py can record their extensions and counts. Every analyser that
+    # reads file content MUST guard with:
+    #   - is_binary(path) before reading content
+    #   - path.stat().st_size <= LARGE_FILE_THRESHOLD_BYTES before reading content
 
 
 @dataclasses.dataclass
