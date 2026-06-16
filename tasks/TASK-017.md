@@ -1,6 +1,6 @@
 # TASK-017: Fix root vs resolved_root mismatch in walk_repo that silently disables .gitignore filtering
 
-**Status**: Pending
+**Status**: In Review
 **Wave**: 1 — Remediation
 **Effort**: S — two-line fix in walk, plus ensuring `is_ignored` and `collect_gitignore_spec` all receive the same resolved root; test authoring is modest
 **Base Branch**: feature/wave-1-foundation
@@ -16,10 +16,10 @@ Affected lines: `spelunk/utils.py:90,108,121,153`.
 
 ## Acceptance Criteria
 
-- [ ] [eng] Given a repo invoked via a relative path (e.g. `Path(".")` run from inside the repo) · When `walk_repo` runs against a `.gitignore` containing `node_modules/` · Then no paths under `node_modules/` appear in `file_paths`
-- [ ] [eng] Given a repo path whose components contain a symlinked segment (e.g. `/tmp/repo` where `/tmp` resolves to `/private/tmp`) · When `walk_repo` runs · Then `.gitignore` rules are still applied (no silent suppression)
-- [ ] [eng] Given `walk_repo` · When it walks · Then the base path passed to `os.walk` and the `root` argument to every `is_ignored` call are both the same resolved absolute path
-- [ ] [eng] Given `walk_repo` is called with a relative path · When it returns · Then `is_ignored` never raises `ValueError` and no path is silently included due to the exception fallback
+- [x] [eng] Given a repo invoked via a relative path (e.g. `Path(".")` run from inside the repo) · When `walk_repo` runs against a `.gitignore` containing `node_modules/` · Then no paths under `node_modules/` appear in `file_paths`
+- [x] [eng] Given a repo path whose components contain a symlinked segment (e.g. `/tmp/repo` where `/tmp` resolves to `/private/tmp`) · When `walk_repo` runs · Then `.gitignore` rules are still applied (no silent suppression)
+- [x] [eng] Given `walk_repo` · When it walks · Then the base path passed to `os.walk` and the `root` argument to every `is_ignored` call are both the same resolved absolute path
+- [x] [eng] Given `walk_repo` is called with a relative path · When it returns · Then `is_ignored` never raises `ValueError` and no path is silently included due to the exception fallback
 
 ## Notes / Risks
 

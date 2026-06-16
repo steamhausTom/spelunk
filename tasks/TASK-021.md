@@ -1,6 +1,6 @@
 # TASK-021: Add size cap to .gitignore reads in collect_gitignore_spec to prevent memory exhaustion
 
-**Status**: Pending
+**Status**: In Review
 **Wave**: 1 — Remediation
 **Effort**: S — add a pre-read size check and a cumulative line-count guard to the existing read loop; test with an oversized fixture
 **Base Branch**: feature/wave-1-foundation
@@ -21,10 +21,10 @@ Affected module: `spelunk/utils.py:30-48`.
 
 ## Acceptance Criteria
 
-- [ ] [eng] Given a `.gitignore` file whose size exceeds 1 MB · When `collect_gitignore_spec` is called · Then the file is skipped, the returned `PathSpec` excludes its patterns, and a warning string is returned naming the skipped file
-- [ ] [eng] Given `.gitignore` files whose combined line count exceeds 50,000 · When `collect_gitignore_spec` is called · Then accumulation stops at the cap, a warning string is returned for each file that was skipped, and no `MemoryError` is raised
-- [ ] [eng] Given a normal repo where no `.gitignore` exceeds the caps · When `collect_gitignore_spec` is called · Then behaviour is identical to the current implementation (no regression) and the returned warnings list is empty
-- [ ] [eng] Given `walk_repo` is called on a repo with an oversized `.gitignore` · When it returns · Then the oversized-file warning appears in the returned `warnings` list
+- [x] [eng] Given a `.gitignore` file whose size exceeds 1 MB · When `collect_gitignore_spec` is called · Then the file is skipped, the returned `PathSpec` excludes its patterns, and a warning string is returned naming the skipped file
+- [x] [eng] Given `.gitignore` files whose combined line count exceeds 50,000 · When `collect_gitignore_spec` is called · Then accumulation stops at the cap, a warning string is returned for each file that was skipped, and no `MemoryError` is raised
+- [x] [eng] Given a normal repo where no `.gitignore` exceeds the caps · When `collect_gitignore_spec` is called · Then behaviour is identical to the current implementation (no regression) and the returned warnings list is empty
+- [x] [eng] Given `walk_repo` is called on a repo with an oversized `.gitignore` · When it returns · Then the oversized-file warning appears in the returned `warnings` list
 - [ ] [qa] Given a repository with a `.gitignore` file of 2 MB · When `walk_repo` is called · Then it completes in under 2 seconds and a warning naming the skipped file appears in the returned warnings
 
 ## Notes / Risks
