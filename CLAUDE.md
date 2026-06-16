@@ -211,6 +211,7 @@ A task is not done until its PR is open and review + security steps have cleared
 
 **Execution rules:**
 - **No implementation without a plan**: engineer agents (`tc-backend-engineer`, `tc-frontend-engineer`, `tc-platform-engineer`) must never be invoked unless `PLAN.md` exists. Invoke `tc-workflow` to create it.
+- **No merge without review**: no branch may be merged to `main` by any agent or the main conversation. Only `tc-project-planner` opens PRs, and only after steps 4, 5, and 6 have all passed. Human approval is required before anything merges.
 - After step 3 completes: `tc-project-planner` launches steps 4, 5, and 6 **in parallel** in a single message
 - Steps 5 and 6 always run together — never one without the other
 - Findings from steps 4, 5, and 6 are ingested by `tc-project-planner`
@@ -218,6 +219,8 @@ A task is not done until its PR is open and review + security steps have cleared
 - XS findings (one-line fixes) may be applied inline; anything larger becomes a new `TASK-XXX`
 
 **No engineer opens a PR.** `tc-project-planner` raises the PR after all three review agents pass and blocking findings are cleared. No agent merges its own PR — all PRs wait for human review and approval.
+
+> **CRITICAL — post-implementation gate**: A feature branch MUST NOT be merged to `main` until steps 4–7 have completed. Specifically: (1) `tc-qa-test-engineer` must have pushed acceptance tests to the branch; (2) `tc-senior-tech-reviewer` and `tc-security-ops-engineer` must both have run and passed; (3) `tc-project-planner` must have opened the PR. The main conversation must never call `git merge`, `git push` to `main`, or any equivalent that bypasses this gate — regardless of how confident it is in the implementation. "Tests pass locally" is not a substitute for the review pipeline.
 
 ### Findings format
 
