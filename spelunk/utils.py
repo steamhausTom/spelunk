@@ -25,27 +25,51 @@ import pathspec
 # Module-level constants
 LARGE_FILE_THRESHOLD_BYTES: int = 10 * 1024 * 1024  # 10 MB
 BINARY_READ_BYTES: int = 8192  # 8 KB
+GITIGNORE_MAX_BYTES: int = 1 * 1024 * 1024  # 1 MB per .gitignore file
+GITIGNORE_MAX_TOTAL_LINES: int = 50_000  # cumulative across all .gitignore files
 
 
-def collect_gitignore_spec(root: Path) -> "pathspec.PathSpec[Any]":
+def collect_gitignore_spec(
+    root: Path,
+) -> "tuple[pathspec.PathSpec[Any], list[str]]":
     """Walk the directory tree and build a combined PathSpec from all .gitignore files.
 
     Rules from root .gitignore and all nested .gitignore files are merged into
     a single PathSpec using the gitwildmatch pattern syntax. The walk does not
     follow symlinks here (we only want gitignore files in the real tree).
+
+    Returns:
+        (spec, warnings) — spec is the combined PathSpec; warnings lists any
+        .gitignore files skipped due to size or cumulative line caps.
     """
     lines: list[str] = []
+    cap_warnings: list[str] = []
 
     for dirpath, _dirnames, filenames in os.walk(root, followlinks=False):
         if ".gitignore" in filenames:
             gitignore_path = Path(dirpath) / ".gitignore"
             try:
+                file_size = gitignore_path.stat().st_size
+                if file_size > GITIGNORE_MAX_BYTES:
+                    cap_warnings.append(
+                        f"Skipped oversized .gitignore: {gitignore_path} ({file_size} bytes)"
+                    )
+                    continue
+
                 content = gitignore_path.read_text(encoding="utf-8", errors="replace")
-                lines.extend(content.splitlines())
+                new_lines = content.splitlines()
+
+                if len(lines) + len(new_lines) > GITIGNORE_MAX_TOTAL_LINES:
+                    cap_warnings.append(
+                        f"Skipped .gitignore due to line cap: {gitignore_path}"
+                    )
+                    continue
+
+                lines.extend(new_lines)
             except (PermissionError, OSError):
                 pass  # skip unreadable .gitignore files silently
 
-    return pathspec.PathSpec.from_lines("gitignore", lines)
+    return pathspec.PathSpec.from_lines("gitignore", lines), cap_warnings
 
 
 def is_ignored(path: Path, root: Path, spec: "pathspec.PathSpec[Any]") -> bool:
@@ -88,11 +112,11 @@ def walk_repo(root: Path) -> tuple[list[Path], list[str], list[str]]:
     - Gitignored paths are excluded using pathspec gitignore semantics.
     """
     resolved_root = root.resolve()
-    spec = collect_gitignore_spec(root)
+    spec, gitignore_warnings = collect_gitignore_spec(resolved_root)
 
     file_paths: list[Path] = []
     errors: list[str] = []
-    warnings: list[str] = []
+    warnings: list[str] = list(gitignore_warnings)
 
     # Track visited directory inodes to detect cycles when followlinks=True.
     # This set is populated as we enter each directory (including via symlink).
@@ -106,7 +130,7 @@ def walk_repo(root: Path) -> tuple[list[Path], list[str], list[str]]:
         pass
 
     for dirpath_str, dirnames, filenames in os.walk(
-        str(root), followlinks=True, topdown=True
+        str(resolved_root), followlinks=True, topdown=True
     ):
         dirpath = Path(dirpath_str)
 
