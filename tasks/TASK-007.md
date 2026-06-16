@@ -1,6 +1,6 @@
 # TASK-007: Implement scanner.py orchestrator and __init__.py public API
 
-**Status**: Pending
+**Status**: In Review
 **Wave**: 2
 **Assignee**: tc-backend-engineer
 **Effort**: M — orchestrator error envelope merging logic and public API contract require care; this is the integration seam
@@ -89,12 +89,12 @@ The outer `try/except` in `scan()` is the final safety net — `scan_repo` shoul
 
 ## Acceptance Criteria
 
-- [ ] [eng] Given a valid directory path · When `scan(path)` is called · Then a `RepoScanResult` is returned without raising an exception
-- [ ] [eng] Given a non-existent path · When `scan(path)` is called · Then a `RepoScanResult` is returned (not raised), with an error in `meta.errors[]` describing the invalid path
-- [ ] [eng] Given an analyser that raises an unexpected exception · When `scan_repo` runs · Then `meta.errors[]` contains `{source: analyser.name, message: str(exc)}` and all other analysers still execute
-- [ ] [eng] Given an analyser that returns errors in its `AnalyserOutput.errors` · When the scan completes · Then those errors appear in `meta.errors[]` with the correct `source`
-- [ ] [eng] Given a scan of any valid directory · When `result.to_dict()` is called · Then `json.dumps(result.to_dict())` succeeds and the output contains `schema_version: "1.0.0"` and a valid ISO 8601 `scanned_at`
-- [ ] [eng] Given `mypy --strict` runs against `scanner.py` and `__init__.py` · When it completes · Then zero type errors are reported
+- [x] [eng] Given a valid directory path · When `scan(path)` is called · Then a `RepoScanResult` is returned without raising an exception
+- [x] [eng] Given a non-existent path · When `scan(path)` is called · Then a `RepoScanResult` is returned (not raised), with an error in `meta.errors[]` describing the invalid path
+- [x] [eng] Given an analyser that raises an unexpected exception · When `scan_repo` runs · Then `meta.errors[]` contains `{source: analyser.name, message: str(exc)}` and all other analysers still execute
+- [x] [eng] Given an analyser that returns errors in its `AnalyserOutput.errors` · When the scan completes · Then those errors appear in `meta.errors[]` with the correct `source`
+- [x] [eng] Given a scan of any valid directory · When `result.to_dict()` is called · Then `json.dumps(result.to_dict())` succeeds and the output contains `schema_version: "1.0.0"` and a valid ISO 8601 `scanned_at`
+- [x] [eng] Given `mypy --strict` runs against `scanner.py` and `__init__.py` · When it completes · Then zero type errors are reported
 - [ ] [qa] Given `from spelunk import scan; result = scan("/some/valid/path")` · When executed in a Python REPL · Then `result` is a `RepoScanResult` instance and `result.meta.errors` is a list
 
 ## Notes / Risks
