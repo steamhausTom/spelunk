@@ -53,13 +53,13 @@ These tasks resolve findings from the Wave 1 review pass. All are on `feature/wa
 
 | ID | Title | Assignee | Status | Effort | Depends On | Task File |
 |----|-------|----------|--------|--------|------------|-----------|
-| TASK-017 | Fix root vs resolved_root mismatch that silently disables .gitignore filtering | tc-backend-engineer | Pending | S | TASK-005 | [tasks/TASK-017.md](tasks/TASK-017.md) |
+| TASK-017 | Fix root vs resolved_root mismatch that silently disables .gitignore filtering | tc-backend-engineer | In Review | S | TASK-005 | [tasks/TASK-017.md](tasks/TASK-017.md) |
 | TASK-018 | Apply nested .gitignore rules relative to their own directory only | tc-backend-engineer | Pending | M | TASK-017 | [tasks/TASK-018.md](tasks/TASK-018.md) |
 | TASK-019 | Fix in-scope symlink double-counting in walk_repo | tc-backend-engineer | Pending | S | TASK-017 | [tasks/TASK-019.md](tasks/TASK-019.md) |
 | TASK-020 | Add coverage tests for STR-F1 through STR-F4 utils scenarios | tc-qa-test-engineer | Pending | S | TASK-017, TASK-018, TASK-019 | [tasks/TASK-020.md](tasks/TASK-020.md) |
-| TASK-021 | Add size cap to .gitignore reads to prevent memory exhaustion | tc-backend-engineer | Pending | S | TASK-005 | [tasks/TASK-021.md](tasks/TASK-021.md) |
-| TASK-022 | Optimise walk_repo hot path — gate _can_open probe on mode bits | tc-backend-engineer | Pending | S | TASK-005 | [tasks/TASK-022.md](tasks/TASK-022.md) |
-| TASK-023 | Normalise error paths to relative and add dependency lock file | tc-backend-engineer | Pending | S | TASK-005 | [tasks/TASK-023.md](tasks/TASK-023.md) |
+| TASK-021 | Add size cap to .gitignore reads to prevent memory exhaustion | tc-backend-engineer | In Review | S | TASK-005 | [tasks/TASK-021.md](tasks/TASK-021.md) |
+| TASK-022 | Optimise walk_repo hot path — gate _can_open probe on mode bits | tc-backend-engineer | In Review | S | TASK-005 | [tasks/TASK-022.md](tasks/TASK-022.md) |
+| TASK-023 | Normalise error paths to relative and add dependency lock file | tc-backend-engineer | In Review | S | TASK-005 | [tasks/TASK-023.md](tasks/TASK-023.md) |
 
 ### Wave 2 — Core pipeline: first end-to-end slice + test infrastructure
 

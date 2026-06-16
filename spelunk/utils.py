@@ -198,15 +198,24 @@ def walk_repo(root: Path) -> tuple[list[Path], list[str], list[str]]:
             try:
                 size = path.stat().st_size
             except PermissionError:
-                errors.append(f"Permission denied: {path}")
+                # Use relative path to avoid leaking directory structure (TASK-023)
+                errors.append(
+                    f"Permission denied: {_relative_path(path, resolved_root)}"
+                )
                 continue
             except OSError as exc:
-                errors.append(f"OS error: {path}: {exc}")
+                errors.append(
+                    f"OS error: {_relative_path(path, resolved_root)}: {exc}"
+                )
                 continue
 
-            # Check open permission explicitly (stat may succeed on owned mode-0 files)
-            if not _can_open(path):
-                errors.append(f"Cannot open for reading: {path}")
+            # Permission check via os.access — honours ACLs and avoids an
+            # extra open() syscall on every file in the hot path (TASK-022).
+            # _can_open is retained as a private helper for test use only.
+            if not os.access(path, os.R_OK):
+                errors.append(
+                    f"Cannot open for reading: {_relative_path(path, resolved_root)}"
+                )
                 continue
 
             # Large file check
@@ -222,9 +231,9 @@ def walk_repo(root: Path) -> tuple[list[Path], list[str], list[str]]:
 def _can_open(path: Path) -> bool:
     """Return True if the file can be opened for reading.
 
-    Attempts a read-only open and immediately closes. Used to detect
-    permission errors that stat() does not surface (e.g. on macOS when
-    the file is owned by the current user but has mode 0).
+    Retained as a private helper for test use only.  The production hot path
+    in walk_repo uses os.access(path, os.R_OK) instead to avoid the extra
+    open() syscall on every file (TASK-022).
     """
     try:
         with open(path, "rb"):
@@ -232,6 +241,18 @@ def _can_open(path: Path) -> bool:
         return True
     except (PermissionError, OSError):
         return False
+
+
+def _relative_path(path: Path, root: Path) -> str:
+    """Return path relative to root as a string, falling back to the basename.
+
+    Used to normalise error/warning messages so absolute filesystem paths are
+    not leaked into the scan output (TASK-023 / SEC-F4.2).
+    """
+    try:
+        return str(path.relative_to(root))
+    except ValueError:
+        return path.name
 
 
 def _is_within(target: Path, root: Path) -> bool:

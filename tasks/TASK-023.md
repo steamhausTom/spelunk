@@ -1,6 +1,6 @@
 # TASK-023: Normalise error paths to relative and add dependency lock file
 
-**Status**: Pending
+**Status**: In Review
 **Wave**: 1 — Remediation
 **Effort**: S — two discrete sub-items: (1) relativise error path strings in walk_repo; (2) generate and commit a pip-tools lock file
 **Base Branch**: feature/wave-1-foundation
@@ -28,8 +28,8 @@ Use `pip-tools` (`pip-compile`) to generate. Add `pip-tools` to the `[dev]` opti
 
 ## Acceptance Criteria
 
-- [ ] [eng] Given a `PermissionError` on a file inside the scan root · When `walk_repo` runs · Then the error string in the returned `errors` list contains a path relative to the scan root, not an absolute path
-- [ ] [eng] Given a non-permission `OSError` on a file inside the scan root · When `walk_repo` runs · Then the error string contains a relative path, not an absolute path
+- [x] [eng] Given a `PermissionError` on a file inside the scan root · When `walk_repo` runs · Then the error string in the returned `errors` list contains a path relative to the scan root, not an absolute path
+- [x] [eng] Given a non-permission `OSError` on a file inside the scan root · When `walk_repo` runs · Then the error string contains a relative path, not an absolute path
 - [ ] [eng] Given `pyproject.toml` · When `pip-compile pyproject.toml --output-file requirements/requirements.txt` is run · Then the command exits 0 and `requirements/requirements.txt` already matches (no drift)
 - [ ] [qa] Given the repo root · When `ls requirements/` is run · Then both `requirements.txt` and `requirements-dev.txt` exist and are committed to version control
 

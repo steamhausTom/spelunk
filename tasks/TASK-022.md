@@ -1,6 +1,6 @@
 # TASK-022: Optimise walk_repo hot path by gating the _can_open probe on mode bits
 
-**Status**: Pending
+**Status**: In Review
 **Wave**: 1 — Remediation
 **Effort**: S — replace the unconditional `_can_open()` call with a mode-bit check that only falls back to open() when permission is ambiguous; benchmark confirms improvement at scale
 **Base Branch**: feature/wave-1-foundation
@@ -20,10 +20,10 @@ Affected: `spelunk/utils.py:179-185` (the `_can_open` call site) and `spelunk/ut
 
 ## Acceptance Criteria
 
-- [ ] [eng] Given a repo of 1,000 readable files · When `walk_repo` runs · Then `_can_open` is not called for any of those files (confirmed by monkeypatching `_can_open` to raise and asserting no exception)
-- [ ] [eng] Given a file for which `os.access(path, os.R_OK)` returns `False` · When `walk_repo` runs · Then the file is recorded as an error and is absent from `file_paths`
-- [ ] [eng] Given a file for which `os.access(path, os.R_OK)` returns `True` · When `walk_repo` runs · Then the file appears in `file_paths` without errors
-- [ ] [eng] Given the optimised `walk_repo` with no unreadable files · When `walk_repo` returns · Then the `errors` list is empty (no regression in error-path handling)
+- [x] [eng] Given a repo of 1,000 readable files · When `walk_repo` runs · Then `_can_open` is not called for any of those files (confirmed by monkeypatching `_can_open` to raise and asserting no exception)
+- [x] [eng] Given a file for which `os.access(path, os.R_OK)` returns `False` · When `walk_repo` runs · Then the file is recorded as an error and is absent from `file_paths`
+- [x] [eng] Given a file for which `os.access(path, os.R_OK)` returns `True` · When `walk_repo` runs · Then the file appears in `file_paths` without errors
+- [x] [eng] Given the optimised `walk_repo` with no unreadable files · When `walk_repo` returns · Then the `errors` list is empty (no regression in error-path handling)
 
 ## Notes / Risks
 

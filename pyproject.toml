@@ -20,6 +20,7 @@ dev = [
     "pytest-cov",
     "mypy",
     "ruff",
+    "pip-tools",
 ]
 
 [project.scripts]
