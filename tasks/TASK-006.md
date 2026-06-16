@@ -1,6 +1,6 @@
 # TASK-006: Implement file_tree.py analyser
 
-**Status**: Pending
+**Status**: In Review
 **Wave**: 2
 **Assignee**: tc-backend-engineer
 **Effort**: M — notable file category logic and extension aggregation have non-trivial mapping tables
@@ -65,12 +65,12 @@ Wrap the entire body in try/except. Catch `OSError` per file when calling `path.
 
 ## Acceptance Criteria
 
-- [ ] [eng] Given a repo with 5 `.py` files and 3 `.js` files · When the file_tree analyser runs · Then `file_tree.extensions` contains entries for `.py` with `file_count=5` and `.js` with `file_count=3`
-- [ ] [eng] Given a repo containing `main.py` at the root · When the file_tree analyser runs · Then `file_tree.notable_files.entrypoints` contains the path for `main.py`
-- [ ] [eng] Given a repo containing `.github/workflows/ci.yml` · When the file_tree analyser runs · Then `file_tree.notable_files.ci_configs` contains that path
-- [ ] [eng] Given a repo containing a file larger than 10 MB · When the file_tree analyser runs · Then `file_tree.total_files` includes that file and its extension appears in `file_tree.extensions`
-- [ ] [eng] Given a repo with files nested 4 directories deep · When the file_tree analyser runs · Then `file_tree.max_depth` equals 4
-- [ ] [eng] Given `mypy --strict` runs against `file_tree.py` · When it completes · Then zero type errors are reported
+- [x] [eng] Given a repo with 5 `.py` files and 3 `.js` files · When the file_tree analyser runs · Then `file_tree.extensions` contains entries for `.py` with `file_count=5` and `.js` with `file_count=3`
+- [x] [eng] Given a repo containing `main.py` at the root · When the file_tree analyser runs · Then `file_tree.notable_files.entrypoints` contains the path for `main.py`
+- [x] [eng] Given a repo containing `.github/workflows/ci.yml` · When the file_tree analyser runs · Then `file_tree.notable_files.ci_configs` contains that path
+- [x] [eng] Given a repo containing a file larger than 10 MB · When the file_tree analyser runs · Then `file_tree.total_files` includes that file and its extension appears in `file_tree.extensions`
+- [x] [eng] Given a repo with files nested 4 directories deep · When the file_tree analyser runs · Then `file_tree.max_depth` equals 4
+- [x] [eng] Given `mypy --strict` runs against `file_tree.py` · When it completes · Then zero type errors are reported
 - [ ] [qa] Given a repository with a `.gitignore` excluding `node_modules/` · When the scan completes · Then `node_modules/` files do not appear in `file_tree.extensions` or `file_tree.total_files`
 
 ## Notes / Risks

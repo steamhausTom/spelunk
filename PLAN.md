@@ -39,7 +39,7 @@
 
 | ID | Title | Assignee | Status | Effort | Depends On | Task File |
 |----|-------|----------|--------|--------|------------|-----------|
-| TASK-006 | Implement file_tree.py analyser | tc-backend-engineer | Pending | M | TASK-002, TASK-004, TASK-005 | [tasks/TASK-006.md](tasks/TASK-006.md) |
+| TASK-006 | Implement file_tree.py analyser | tc-backend-engineer | In Review | M | TASK-002, TASK-004, TASK-005 | [tasks/TASK-006.md](tasks/TASK-006.md) |
 | TASK-007 | Implement scanner.py orchestrator and __init__.py public API | tc-backend-engineer | Pending | M | TASK-002, TASK-003, TASK-004, TASK-006 | [tasks/TASK-007.md](tasks/TASK-007.md) |
 | TASK-008 | Implement __main__.py CLI entry point | tc-backend-engineer | Pending | S | TASK-007 | [tasks/TASK-008.md](tasks/TASK-008.md) |
 | TASK-009 | Establish conftest.py build_repo factory and test infrastructure | tc-qa-test-engineer | Pending | M | TASK-001, TASK-007 | [tasks/TASK-009.md](tasks/TASK-009.md) |
