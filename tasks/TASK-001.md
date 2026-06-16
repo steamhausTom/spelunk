@@ -1,6 +1,6 @@
 # TASK-001: Scaffold pyproject.toml and project packaging
 
-**Status**: Pending
+**Status**: In Review
 **Wave**: 1
 **Assignee**: tc-backend-engineer
 **Effort**: S — straightforward packaging config with one conditional dependency and dev extras; no logic to implement
@@ -33,11 +33,11 @@ The file must:
 
 ## Acceptance Criteria
 
-- [ ] [eng] Given `pyproject.toml` is present · When `pip install -e ".[dev]"` runs on Python 3.10 · Then the package installs without errors and `import spelunk` succeeds
-- [ ] [eng] Given `pyproject.toml` is present · When `pip install -e ".[dev]"` runs on Python 3.11+ · Then `tomli` is NOT installed and `import spelunk` succeeds
-- [ ] [eng] Given the installed package · When `python -c "import spelunk"` runs · Then no ImportError is raised
-- [ ] [eng] Given `pyproject.toml` · When `[project.dependencies]` is inspected · Then `tomli>=2.0; python_version < "3.11"` is present as a runtime dep with a PEP 508 marker
-- [ ] [eng] Given `pyproject.toml` · When `[tool.mypy]` is inspected · Then `strict = true` is set and `tests/` is listed under `exclude`
+- [x] [eng] Given `pyproject.toml` is present · When `pip install -e ".[dev]"` runs on Python 3.10 · Then the package installs without errors and `import spelunk` succeeds
+- [x] [eng] Given `pyproject.toml` is present · When `pip install -e ".[dev]"` runs on Python 3.11+ · Then `tomli` is NOT installed and `import spelunk` succeeds
+- [x] [eng] Given the installed package · When `python -c "import spelunk"` runs · Then no ImportError is raised
+- [x] [eng] Given `pyproject.toml` · When `[project.dependencies]` is inspected · Then `tomli>=2.0; python_version < "3.11"` is present as a runtime dep with a PEP 508 marker
+- [x] [eng] Given `pyproject.toml` · When `[tool.mypy]` is inspected · Then `strict = true` is set and `tests/` is listed under `exclude`
 - [ ] [qa] Given the scaffolded repo · When `pytest --collect-only` runs · Then the test runner starts without configuration errors
 
 ## Notes / Risks

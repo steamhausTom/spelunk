@@ -1,6 +1,6 @@
 # TASK-004: Implement interfaces.py Analyser Protocol
 
-**Status**: Pending
+**Status**: In Review
 **Wave**: 1
 **Assignee**: tc-backend-engineer
 **Effort**: S — Protocol definition plus supporting input/output types; no runtime logic
@@ -58,11 +58,11 @@ The `name` attribute is used by the orchestrator as the `source` string in error
 
 ## Acceptance Criteria
 
-- [ ] [eng] Given a function with signature `(root: Path, ctx: ScanInputs) -> AnalyserOutput` and a `name: str` attribute · When `mypy --strict` checks it against the `Analyser` Protocol · Then it type-checks as a valid `Analyser` with zero errors
-- [ ] [eng] Given a function that returns `str` instead of `AnalyserOutput` · When `mypy --strict` checks it against the `Analyser` Protocol · Then mypy reports a type error
-- [ ] [eng] Given `interfaces.py` · When its import graph is inspected (e.g. `import ast; ast.parse(open(...).read())`) · Then `scanner` does not appear in any import statement
-- [ ] [eng] Given an `AnalyserOutput` with a non-empty `errors` list · When `to_dict()` is called on the embedded `ScanError` objects · Then each error dict has `source` and `message` keys
-- [ ] [eng] Given `mypy --strict` runs against `interfaces.py` · When it completes · Then zero type errors are reported
+- [x] [eng] Given a function with signature `(root: Path, ctx: ScanInputs) -> AnalyserOutput` and a `name: str` attribute · When `mypy --strict` checks it against the `Analyser` Protocol · Then it type-checks as a valid `Analyser` with zero errors
+- [x] [eng] Given a function that returns `str` instead of `AnalyserOutput` · When `mypy --strict` checks it against the `Analyser` Protocol · Then mypy reports a type error
+- [x] [eng] Given `interfaces.py` · When its import graph is inspected (e.g. `import ast; ast.parse(open(...).read())`) · Then `scanner` does not appear in any import statement
+- [x] [eng] Given an `AnalyserOutput` with a non-empty `errors` list · When `to_dict()` is called on the embedded `ScanError` objects · Then each error dict has `source` and `message` keys
+- [x] [eng] Given `mypy --strict` runs against `interfaces.py` · When it completes · Then zero type errors are reported
 
 ## Notes / Risks
 

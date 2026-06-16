@@ -1,6 +1,6 @@
 # TASK-005: Implement utils.py — directory walk, .gitignore filtering, and symlink containment
 
-**Status**: Pending
+**Status**: In Review
 **Wave**: 1
 **Assignee**: tc-backend-engineer
 **Effort**: M — three distinct behaviours (walk, gitignore, symlink safety) each with non-trivial edge cases
@@ -63,14 +63,14 @@ BINARY_READ_BYTES = 8192  # 8 KB
 
 ## Acceptance Criteria
 
-- [ ] [eng] Given a repo with a `.gitignore` containing `node_modules/` · When `walk_repo` runs · Then no path inside `node_modules/` appears in the returned `file_paths`
-- [ ] [eng] Given a symlink pointing to a file outside the scan root · When `walk_repo` runs · Then the symlink target does not appear in `file_paths` and no error is added
-- [ ] [eng] Given a symlink cycle within the repo · When `walk_repo` runs · Then the walk terminates (no infinite loop), the cyclic link is not in `file_paths`, and no error is added
-- [ ] [eng] Given a file that raises `PermissionError` on stat · When `walk_repo` runs · Then the path appears in the returned `errors` list and the walk continues to completion
-- [ ] [eng] Given a file larger than 10 MB · When `walk_repo` runs · Then the path is in `file_paths` and a warning string is in the returned `warnings` list
-- [ ] [eng] Given a file containing a null byte in its first 8 KB · When `is_binary` is called · Then it returns `True`
-- [ ] [eng] Given a plain text file with no null bytes · When `is_binary` is called · Then it returns `False`
-- [ ] [eng] Given `mypy --strict` runs against `utils.py` · When it completes · Then zero type errors are reported
+- [x] [eng] Given a repo with a `.gitignore` containing `node_modules/` · When `walk_repo` runs · Then no path inside `node_modules/` appears in the returned `file_paths`
+- [x] [eng] Given a symlink pointing to a file outside the scan root · When `walk_repo` runs · Then the symlink target does not appear in `file_paths` and no error is added
+- [x] [eng] Given a symlink cycle within the repo · When `walk_repo` runs · Then the walk terminates (no infinite loop), the cyclic link is not in `file_paths`, and no error is added
+- [x] [eng] Given a file that raises `PermissionError` on stat · When `walk_repo` runs · Then the path appears in the returned `errors` list and the walk continues to completion
+- [x] [eng] Given a file larger than 10 MB · When `walk_repo` runs · Then the path is in `file_paths` and a warning string is in the returned `warnings` list
+- [x] [eng] Given a file containing a null byte in its first 8 KB · When `is_binary` is called · Then it returns `True`
+- [x] [eng] Given a plain text file with no null bytes · When `is_binary` is called · Then it returns `False`
+- [x] [eng] Given `mypy --strict` runs against `utils.py` · When it completes · Then zero type errors are reported
 
 ## Notes / Risks
 

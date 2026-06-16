@@ -1,6 +1,6 @@
 # TASK-002: Implement models.py data layer
 
-**Status**: Pending
+**Status**: In Review
 **Wave**: 1
 **Assignee**: tc-backend-engineer
 **Effort**: S — pure data definitions; no business logic; the shape is fully specified in the output schema
@@ -143,12 +143,12 @@ Do NOT implement `from_dict()` — it is explicitly out of scope per architect d
 
 ## Acceptance Criteria
 
-- [ ] [eng] Given a fully populated `RepoScanResult` · When `to_dict()` is called · Then `json.dumps(result.to_dict())` succeeds with no custom encoder and no `TypeError`
-- [ ] [eng] Given `models.py` · When imported · Then it imports only from the Python standard library (no `spelunk` sub-imports)
-- [ ] [eng] Given `models.py` · When inspected · Then it contains no `from_dict()` method and no business logic (no conditionals, no data transformations)
-- [ ] [eng] Given a `ScanError` instance · When `to_dict()` is called · Then the result contains `source` and `message` keys with string values
-- [ ] [eng] Given a `RepoScanResult` with an empty `GitInfo` (`present=False`, all other fields `None` or `[]`) · When `to_dict()` is called · Then the `git` key is present and its `present` value is `False`
-- [ ] [eng] Given `mypy --strict` runs against `models.py` · When it completes · Then zero type errors are reported
+- [x] [eng] Given a fully populated `RepoScanResult` · When `to_dict()` is called · Then `json.dumps(result.to_dict())` succeeds with no custom encoder and no `TypeError`
+- [x] [eng] Given `models.py` · When imported · Then it imports only from the Python standard library (no `spelunk` sub-imports)
+- [x] [eng] Given `models.py` · When inspected · Then it contains no `from_dict()` method and no business logic (no conditionals, no data transformations)
+- [x] [eng] Given a `ScanError` instance · When `to_dict()` is called · Then the result contains `source` and `message` keys with string values
+- [x] [eng] Given a `RepoScanResult` with an empty `GitInfo` (`present=False`, all other fields `None` or `[]`) · When `to_dict()` is called · Then the `git` key is present and its `present` value is `False`
+- [x] [eng] Given `mypy --strict` runs against `models.py` · When it completes · Then zero type errors are reported
 
 ## Notes / Risks
 
